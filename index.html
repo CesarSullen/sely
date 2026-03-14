@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+		/>
+
+		<meta property="og:title" content="Sely" />
+		<meta property="og:description" content="App complemento de STOX" />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="./assets/opengraph/opengraph.png" />
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-title" content="SELY" />
+		<meta name="theme-color" content="#0d0d0d" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+		<link rel="icon" type="image/png" href="./assets/opengraph/logo.png" />
+		<link rel="apple-touch-icon" href="./assets/opengraph/logo.png" />
+
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="manifest" href="./manifest.json" />
+		<title>SELY</title>
+	</head>
+	<body>
+		<header class="main-header">
+			<h1 class="app-name">SELY</h1>
+		</header>
+
+		<main id="app-container" class="app-container">
+			<section id="view-home" class="view active">
+				<div class="quick-actions">
+					<div class="action-card" onclick="openSaleModal()">
+						<div class="action-card-icon">
+							<img src="./assets/icons/handbag-simple.svg" />
+						</div>
+						<h3>Registrar Venta</h3>
+					</div>
+				</div>
+
+				<div class="home-stats">
+					<div class="stat-card">
+						<div class="stat-header">
+							<img src="./assets/icons/tag-duotone.svg" class="stat-icon" />
+							<span class="stat-label">Ventas<br />Hoy</span>
+						</div>
+						<h3 id="home-stat-sales" class="stat-value">0</h3>
+					</div>
+					<div class="stat-card">
+						<div class="stat-header">
+							<img
+								src="./assets/icons/chart-line-up-duotone.svg"
+								class="stat-icon"
+							/>
+							<span class="stat-label">Ingresos<br />Hoy</span>
+						</div>
+						<h3 id="home-stat-income" class="stat-value">$0.00</h3>
+					</div>
+				</div>
+			</section>
+
+			<section id="view-inventory" class="view">
+				<div class="view-header">
+					<h2>Inventario</h2>
+				</div>
+				<div class="search-box">
+					<img src="./assets/icons/magnifying-glass.svg" />
+					<input
+						type="text"
+						placeholder="Buscar producto..."
+						id="inventory-search"
+						oninput="handleSearch(event)"
+					/>
+				</div>
+				<div id="category-filters" class="category-pills-container"></div>
+				<div id="inventory-list" class="inventory-list"></div>
+			</section>
+
+			<section id="view-history" class="view">
+				<div class="view-header"><h2>Mis Ventas</h2></div>
+				<div id="unified-timeline" class="unified-timeline"></div>
+			</section>
+
+			<section id="view-sync" class="view">
+				<div class="view-header"><h2>Sincronizar</h2></div>
+				<div class="settings-card">
+					<h3>Cargar Inventario</h3>
+					<p>
+						Selecciona el archivo enviado por el dueño para actualizar precios y
+						stock.
+					</p>
+					<button
+						class="primary-btn"
+						onclick="document.getElementById('input-import').click()"
+					>
+						<img src="./assets/icons/file-arrow-down.svg" />
+						Cargar Datos
+					</button>
+					<input
+						type="file"
+						id="input-import"
+						hidden
+						accept=".json"
+						onchange="handleImport(this.files[0])"
+					/>
+				</div>
+				<div class="settings-card">
+					<h3>Enviar Reporte</h3>
+					<p>Genera el archivo de ventas para enviárselo al dueño.</p>
+					<button class="primary-btn" onclick="exportSalesToOwner()">
+						<img src="./assets/icons/file-arrow-up.svg" />
+						Exportar Ventas
+					</button>
+				</div>
+				<div class="settings-card">
+					<div class="companies-logos">
+						<a href="http://synthocean.com" target="_blank">
+							<img
+								src="./assets/opengraph/stox-logo-text.png"
+								class="company-logo"
+							/>
+						</a>
+						<a href="http://synthocean.com" target="_blank">
+							<img
+								src="./assets/opengraph/so-logo-white-2.webp"
+								class="company-logo"
+							/>
+						</a>
+					</div>
+
+					<span class="version-badge">SELY v1.3.0</span>
+
+					<div class="legal-links">
+						<a
+							href="https://wa.me/5351643954?text=Hola. Me gustaría informar de un problema en STOX."
+							target="_blank"
+							>Informar de un problema</a
+						>
+						<a
+							href="https://wa.me/5351643954?text=Hola. Me gustaría obtener información sobre cómo obtener una web para mi negocio."
+							target="_blank"
+							>Crea la web de tu negocio</a
+						>
+						<p class="copyright">© 2026 SELY</p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<nav class="bottom-nav">
+			<button class="nav-item active" onclick="switchView('view-home', this)">
+				<img src="./assets/icons/house.svg" />
+				<span>Inicio</span>
+			</button>
+			<button class="nav-item" onclick="switchView('view-inventory', this)">
+				<img src="./assets/icons/package.svg" />
+				<span>Inventario</span>
+			</button>
+			<button class="nav-item" onclick="switchView('view-history', this)">
+				<img src="./assets/icons/receipt.svg" />
+				<span>Historial</span>
+			</button>
+			<button class="nav-item" onclick="switchView('view-sync', this)">
+				<img src="./assets/icons/arrows-clockwise.svg" />
+				<span>Sync</span>
+			</button>
+		</nav>
+
+		<div id="modal-sale" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Registrar Venta</h2>
+					<button class="close-btn" onclick="closeModal('modal-sale')">
+						<img src="./assets/icons/x-circle.svg" />
+					</button>
+				</div>
+				<form id="form-sale" onsubmit="handleSaleSubmit(event)">
+					<div class="form-group">
+						<label>Producto</label>
+						<select
+							id="sale-product-select"
+							class="form-input"
+							required
+						></select>
+					</div>
+					<div class="form-group">
+						<label>Cantidad</label>
+						<input
+							type="number"
+							id="sale-quantity"
+							class="form-input"
+							min="1"
+							value="1"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label>Precio de Venta (cada unidad)</label>
+						<input
+							type="number"
+							id="sale-price"
+							class="form-input"
+							step="0.01"
+							placeholder="0.00"
+							required
+						/>
+					</div>
+					<div class="modal-actions">
+						<button type="submit" class="btn-confirm">Confirmar Venta</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="modal-premium" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Acceso Premium</h2>
+				</div>
+
+				<ul class="premium-features">
+					<li>Inventario ilimitado</li>
+					<li>Acceso al historial</li>
+					<li>Estadísticas detalladas</li>
+					<li>Exportación de datos</li>
+					<li>Copia de seguridad</li>
+					<li>App para dependiente</li>
+				</ul>
+
+				<div class="pricing-container">
+					<div class="pricing-options">
+						<div class="price-item">
+							<span>Saldo:</span> <strong>250 CUP</strong>
+						</div>
+						<div class="price-item">
+							<span>Efectivo:</span> <strong>400 CUP</strong>
+						</div>
+						<div class="price-item">
+							<span>Transf.:</span> <strong>500 CUP</strong>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Introduce tu código</label>
+					<input
+						type="text"
+						id="premium-code"
+						class="form-input premium-code"
+						placeholder="XXXX-XXXX-XXXX-XXXX"
+					/>
+				</div>
+
+				<button class="btn-confirm" onclick="validatePremiumCode()">
+					Activar Premium
+				</button>
+
+				<a
+					href="https://wa.me/5351643954?text=Hola, quiero obtener un código Premium para SELY."
+					target="_blank"
+					class="contact-link"
+				>
+					¿No tienes código? Click aquí.
+				</a>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+		<script src="./js/supabase-config.js"></script>
+		<script src="./js/main.js"></script>
+	</body>
+</html>
