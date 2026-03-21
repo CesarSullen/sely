@@ -142,8 +142,8 @@ img {
 }
 
 .home-stats {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+	display: flex;
+	flex-direction: column;
 	gap: 0.8rem;
 	margin-top: 1.2rem;
 }
@@ -161,26 +161,25 @@ img {
 .stat-header {
 	display: flex;
 	align-items: center;
-	gap: 0.3rem;
+	gap: 0.5rem;
 	margin-bottom: 0.8rem;
 }
 
 .stat-icon {
-	width: 30px;
-	height: 30px;
+	width: 32px;
+	height: 32px;
 }
 
 .stat-label {
 	color: var(--text-muted);
-	font-size: 0.8rem;
-	text-transform: uppercase;
+	font-size: 1.15rem;
 	letter-spacing: 0.8px;
 	font-weight: 500;
 	line-height: 1.2;
 }
 
 .stat-value {
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 	font-weight: 600;
 	color: var(--accent);
 }
@@ -217,7 +216,7 @@ img {
 }
 
 .nav-item img {
-	width: 28px;
+	width: 26px;
 	opacity: 0.4;
 }
 
