@@ -84,8 +84,8 @@ function renderInventory(productsToDisplay = db.products) {
                     </div>
                 </div>
                 <div class="item-values">
+				<div class="price">$${product.price.toFixed(2)}</div>
                     <div class="quantity">${product.stock} u</div>
-                    <div class="price">$${product.price.toFixed(2)}</div>
                 </div>
             </div>
         `;

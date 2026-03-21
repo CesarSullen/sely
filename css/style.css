@@ -378,7 +378,7 @@ input[list]::-webkit-calendar-picker-indicator {
 	display: flex;
 	align-items: center;
 	font-size: 1.1rem;
-	margin-bottom: 0.6rem;
+	margin-bottom: 0.4rem;
 }
 
 .premium-features li::before {
@@ -595,14 +595,14 @@ input[list]::-webkit-calendar-picker-indicator {
 }
 
 .item-values .quantity {
-	font-size: 0.9rem;
-	color: var(--text-muted);
+	font-size: 1rem;
+	font-weight: 600;
 }
 
 .item-values .price {
 	font-size: 1rem;
-	font-weight: 600;
 	margin-top: 2px;
+	color: var(--accent);
 }
 
 .unified-timeline {
