@@ -258,21 +258,47 @@ function handleSaleSubmit(event) {
 	event.preventDefault();
 
 	const productId = document.getElementById("sale-product-select").value.trim();
-	const quantity = parseInt(document.getElementById("sale-quantity").value);
+	const quantityToSell = parseInt(
+		document.getElementById("sale-quantity").value,
+	);
 	const priceAtSale = parseFloat(document.getElementById("sale-price").value);
 	const product = db.products.find((p) => p.id === productId);
 
-	if (product && product.stock >= quantity) {
-		product.stock -= quantity;
+	if (product && product.stock >= quantityToSell) {
+		let remaining = quantityToSell;
+		let totalCostOfSale = 0;
+
+		if (!product.batches || product.batches.length === 0) {
+			product.batches = [
+				{ quantity: product.stock, cost: product.price / 1.3 },
+			];
+		}
+
+		while (remaining > 0 && product.batches.length > 0) {
+			let batch = product.batches[0];
+
+			if (batch.quantity <= remaining) {
+				totalCostOfSale += batch.quantity * batch.cost;
+				remaining -= batch.quantity;
+				product.batches.shift();
+			} else {
+				totalCostOfSale += remaining * batch.cost;
+				batch.quantity -= remaining;
+				remaining = 0;
+			}
+		}
+
+		product.stock -= quantityToSell;
 		product.price = priceAtSale;
 
 		db.sales.push({
 			id: `sale-${Date.now()}`,
 			product_id: product.id,
 			product_name: product.name,
-			quantity: quantity,
+			quantity: quantityToSell,
 			price_at_sale: priceAtSale,
-			total: priceAtSale * quantity,
+			total: priceAtSale * quantityToSell,
+			acquisition_cost_total: totalCostOfSale,
 			date: new Date().toISOString(),
 			type: "sale",
 		});
@@ -280,9 +306,7 @@ function handleSaleSubmit(event) {
 		saveToStorage();
 		renderDashboard();
 		closeModal("modal-sale");
-		alert(
-			"Venta registrada con éxito.\nEl precio del producto ha sido actualizado.",
-		);
+		alert("Venta registrada con éxito.");
 	} else {
 		alert("Cantidad insuficiente en el inventario o producto no encontrado.");
 	}
@@ -332,8 +356,13 @@ function handleImport(file) {
 // Exporting data
 async function exportSalesToOwner() {
 	const fileName = `ventas_sely_${new Date().toLocaleDateString().replace(/\//g, "-")}.json`;
-	const dataStr = JSON.stringify({ sales: db.sales });
-	const blob = new Blob([dataStr], { type: "application/json" });
+	const dataToExport = {
+		sales: db.sales,
+		products: db.products,
+	};
+	const blob = new Blob([JSON.stringify(dataToExport)], {
+		type: "application/json",
+	});
 	const file = new File([blob], fileName, { type: "application/json" });
 
 	if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -429,17 +458,6 @@ function activatePremium(days = 30) {
 
 	localStorage.setItem("sely_premium", JSON.stringify(premiumData));
 }
-
-window.addEventListener("DOMContentLoaded", () => {
-	const parsedUrl = new URL(window.location);
-
-	if (
-		parsedUrl.searchParams.has("shared_file") ||
-		window.location.search.includes("share")
-	) {
-		console.log("Archivo recibido mediante Share Target");
-	}
-});
 
 if ("launchQueue" in window) {
 	launchQueue.setConsumer(async (launchParams) => {
