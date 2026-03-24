@@ -265,40 +265,16 @@ function handleSaleSubmit(event) {
 	const product = db.products.find((p) => p.id === productId);
 
 	if (product && product.stock >= quantityToSell) {
-		let remaining = quantityToSell;
-		let totalCostOfSale = 0;
-
-		if (!product.batches || product.batches.length === 0) {
-			product.batches = [
-				{ quantity: product.stock, cost: product.price / 1.3 },
-			];
-		}
-
-		while (remaining > 0 && product.batches.length > 0) {
-			let batch = product.batches[0];
-
-			if (batch.quantity <= remaining) {
-				totalCostOfSale += batch.quantity * batch.cost;
-				remaining -= batch.quantity;
-				product.batches.shift();
-			} else {
-				totalCostOfSale += remaining * batch.cost;
-				batch.quantity -= remaining;
-				remaining = 0;
-			}
-		}
-
 		product.stock -= quantityToSell;
 		product.price = priceAtSale;
 
 		db.sales.push({
-			id: `sale-${Date.now()}`,
+			id: `sale-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
 			product_id: product.id,
 			product_name: product.name,
 			quantity: quantityToSell,
 			price_at_sale: priceAtSale,
 			total: priceAtSale * quantityToSell,
-			acquisition_cost_total: totalCostOfSale,
 			date: new Date().toISOString(),
 			type: "sale",
 		});
@@ -355,7 +331,9 @@ function handleImport(file) {
 
 // Exporting data
 async function exportSalesToOwner() {
-	const fileName = `ventas_sely_${new Date().toLocaleDateString().replace(/\//g, "-")}.json`;
+	const dateStr = new Date().toISOString().slice(0, 10);
+	const fileName = `ventas_sely_${dateStr}.json`;
+
 	const dataToExport = {
 		sales: db.sales,
 		products: db.products,
@@ -475,6 +453,20 @@ if ("launchQueue" in window) {
 		}
 	});
 }
+
+async function trackProjectActivity(projectName) {
+	try {
+		const { error } = await _supabase.rpc("increment_visit", {
+			name_param: projectName,
+		});
+
+		if (error) throw error;
+	} catch (err) {
+		console.warn("Offline mode");
+	}
+}
+
+trackProjectActivity("SELY");
 
 if ("serviceWorker" in navigator) {
 	window.addEventListener("load", () => {
