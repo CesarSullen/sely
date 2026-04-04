@@ -1,4 +1,4 @@
-const CACHE_NAME = "sely-v1.5.1";
+const CACHE_NAME = "sely-v1.5.2";
 const STATIC_ASSETS = [
 	// Page
 	"./",
@@ -23,6 +23,7 @@ const STATIC_ASSETS = [
 	"./assets/icons/house.svg",
 	"./assets/icons/magnifying-glass.svg",
 	"./assets/icons/package.svg",
+	"./assets/icons/plus-circle.svg",
 	"./assets/icons/receipt.svg",
 	"./assets/icons/tag-duotone.svg",
 	"./assets/icons/x-circle.svg",

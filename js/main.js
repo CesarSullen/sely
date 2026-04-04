@@ -70,7 +70,7 @@ function renderInventory(productsToDisplay = db.products) {
 		}
 
 		const itemHtml = `
-            <div class="inventory-item">
+            <div class="inventory-item" onclick="openEditModal('${product.id}')">
                 <div class="item-info">
                     <div class="item-icon-box">
                         <img src="./assets/icons/package.svg">
@@ -150,6 +150,76 @@ function toggleInventoryFilter(filter) {
 
 	renderCategoryFilters();
 	renderInventory(filtered);
+}
+
+function openSupplyModal() {
+	const dataList = document.getElementById("product-list");
+	dataList.innerHTML = "";
+
+	db.products.forEach((product) => {
+		const option = document.createElement("option");
+		option.value = product.name;
+		dataList.appendChild(option);
+	});
+
+	document.getElementById("modal-supply").classList.add("active");
+}
+
+function handleSupplySubmit(event) {
+	event.preventDefault();
+
+	const name = document.getElementById("supply-product-input").value.trim();
+	const quantity = parseInt(document.getElementById("supply-quantity").value);
+
+	let product = db.products.find(
+		(p) => p.name.toLowerCase() === name.toLowerCase(),
+	);
+
+	if (product) {
+		product.stock += quantity;
+
+		saveToStorage();
+		renderDashboard();
+		renderInventory();
+		closeModal("modal-supply");
+		alert(`Se han añadido ${quantity} unidades a ${product.name}.`);
+	} else {
+		alert(
+			"Error: El producto no existe en la nomenclatura oficial. Pídale al Manager que se lo envíe.",
+		);
+	}
+}
+
+function openEditModal(productId) {
+	const product = db.products.find((p) => p.id === productId);
+	if (!product) return;
+
+	document.getElementById("edit-product-id").value = product.id;
+	document.getElementById("edit-product-name").value = product.name;
+	document.getElementById("edit-product-price").value = product.price;
+	document.getElementById("edit-product-stock").value = product.stock;
+
+	document.getElementById("modal-edit").classList.add("active");
+}
+
+function handleEditSubmit(event) {
+	event.preventDefault();
+
+	const id = document.getElementById("edit-product-id").value;
+	const product = db.products.find((p) => p.id === id);
+
+	if (product) {
+		product.price = parseFloat(
+			document.getElementById("edit-product-price").value,
+		);
+		product.stock = parseInt(
+			document.getElementById("edit-product-stock").value,
+		);
+
+		saveToStorage();
+		renderInventory();
+		closeModal("modal-edit");
+	}
 }
 
 function renderHistory() {
@@ -309,18 +379,36 @@ function handleImport(file) {
 		try {
 			const imported = JSON.parse(e.target.result);
 
-			if (imported.products) {
-				db.products = imported.products;
+			if (imported.products && Array.isArray(imported.products)) {
+				imported.products.forEach((newProd) => {
+					const existingIndex = db.products.findIndex(
+						(p) => p.id === newProd.id,
+					);
+
+					if (existingIndex !== -1) {
+						db.products[existingIndex].name = newProd.name;
+						db.products[existingIndex].category = newProd.category;
+						db.products[existingIndex].price = newProd.price;
+					} else {
+						db.products.push(newProd);
+					}
+				});
 			}
+
 			if (imported.categories) {
-				db.categories = imported.categories;
+				db.categories = [
+					...new Set([...db.categories, ...imported.categories]),
+				];
 			}
-			if (imported.settings) {
+
+			if (imported.settings && imported.settings.stockThreshold) {
 				db.settings.stockThreshold = imported.settings.stockThreshold;
 			}
 
 			saveToStorage();
-			alert("Inventario actualizado correctamente");
+			alert(
+				"Inventario sincronizado correctamente.\n\n⚠️ Por favor, revisa y ajusta las cantidades (stock) de los productos recibidos.",
+			);
 		} catch (err) {
 			console.error("Error al parsear el JSON:", err);
 			alert("Error: El archivo no es válido.");
@@ -364,6 +452,35 @@ async function exportSalesToOwner() {
 	downloadAnchorNode.click();
 	downloadAnchorNode.remove();
 	URL.revokeObjectURL(url);
+}
+
+function clearDatabase() {
+	const confirmed = confirm(
+		"¿ESTÁS SEGURO?\nEsta acción borrará absolutamente todos tus datos, productos, ventas y categorías. No se puede deshacer.",
+	);
+
+	if (confirmed) {
+		const reallyConfirmed = prompt(
+			"Escribe 'BORRAR' en mayúsculas para confirmar la eliminación total:",
+		);
+
+		if (reallyConfirmed === "BORRAR") {
+			db = {
+				products: [],
+				sales: [],
+				categories: ["General"],
+				settings: { stockThreshold: 5 },
+			};
+
+			localStorage.removeItem("sely_db");
+
+			alert("Base de datos de SELY reseteada con éxito.");
+
+			location.reload();
+		} else {
+			alert("Operación cancelada.");
+		}
+	}
 }
 
 function loadFromStorage() {
