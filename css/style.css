@@ -110,9 +110,9 @@ img {
 }
 
 .quick-actions {
-	display: flex;
-	flex-direction: column;
-	gap: 1.2rem;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 0.5rem;
 }
 
 .action-card {
@@ -253,7 +253,7 @@ img {
 	pointer-events: all;
 }
 
-.close-btn {
+.modal-header-btn {
 	background: none;
 	border: none;
 	cursor: pointer;
@@ -262,7 +262,7 @@ img {
 	justify-content: center;
 }
 
-.close-btn img {
+.modal-header-btn img {
 	width: 32px;
 	height: 32px;
 }
@@ -602,7 +602,7 @@ input[list]::-webkit-calendar-picker-indicator {
 .item-values .price {
 	font-size: 1rem;
 	margin-top: 2px;
-	color: var(--accent);
+	color: hsl(142, 69%, 58%);
 }
 
 .unified-timeline {

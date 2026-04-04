@@ -35,11 +35,18 @@
 		<main id="app-container" class="app-container">
 			<section id="view-home" class="view active">
 				<div class="quick-actions">
+					<div class="action-card" onclick="openSupplyModal()">
+						<div class="action-card-icon">
+							<img src="./assets/icons/plus-circle.svg" />
+						</div>
+						<h3>Agregar</h3>
+					</div>
+
 					<div class="action-card" onclick="openSaleModal()">
 						<div class="action-card-icon">
 							<img src="./assets/icons/handbag-simple.svg" />
 						</div>
-						<h3>Registrar Venta</h3>
+						<h3>Vender</h3>
 					</div>
 				</div>
 
@@ -118,6 +125,20 @@
 					</button>
 				</div>
 				<div class="settings-card">
+					<h3>Zona de Peligro</h3>
+					<p>
+						Borra permanentemente el inventario local y el historial de ventas
+						de este dispositivo.
+					</p>
+					<button
+						class="btn-delete"
+						style="margin-top: 1rem"
+						onclick="clearDatabase()"
+					>
+						Borrar todos los datos
+					</button>
+				</div>
+				<div class="settings-card">
 					<div class="companies-logos">
 						<img
 							src="./assets/opengraph/stox-logo-text.png"
@@ -125,7 +146,7 @@
 						/>
 					</div>
 
-					<span class="version-badge">v1.5.1</span>
+					<span class="version-badge">v1.5.2</span>
 
 					<div class="legal-links">
 						<a
@@ -163,11 +184,53 @@
 			</button>
 		</nav>
 
+		<div id="modal-supply" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Recibir Mercancía</h2>
+					<button class="modal-header-btn" onclick="closeModal('modal-supply')">
+						<img src="./assets/icons/x-circle.svg" />
+					</button>
+				</div>
+				<form id="form-supply" onsubmit="handleSupplySubmit(event)">
+					<div class="form-group">
+						<label>Producto (existente)</label>
+						<input
+							list="product-list"
+							id="supply-product-input"
+							class="form-input"
+							placeholder="Escribe para buscar..."
+							required
+						/>
+						<datalist id="product-list"></datalist>
+					</div>
+
+					<div class="form-group">
+						<label>Cantidad Recibida</label>
+						<input
+							type="number"
+							id="supply-quantity"
+							class="form-input"
+							min="1"
+							value="1"
+							required
+						/>
+					</div>
+
+					<div class="modal-actions">
+						<button type="submit" class="btn-confirm">
+							Añadir al Inventario
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<div id="modal-sale" class="modal">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h2>Registrar Venta</h2>
-					<button class="close-btn" onclick="closeModal('modal-sale')">
+					<button class="modal-header-btn" onclick="closeModal('modal-sale')">
 						<img src="./assets/icons/x-circle.svg" />
 					</button>
 				</div>
@@ -204,6 +267,55 @@
 					</div>
 					<div class="modal-actions">
 						<button type="submit" class="btn-confirm">Confirmar Venta</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="modal-edit" class="modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Ajustar Inventario Local</h2>
+					<button class="modal-header-btn" onclick="closeModal('modal-edit')">
+						<img src="./assets/icons/x-circle.svg" />
+					</button>
+				</div>
+				<form id="form-edit-product" onsubmit="handleEditSubmit(event)">
+					<input type="hidden" id="edit-product-id" />
+
+					<div class="form-group">
+						<label>Nombre del Producto</label>
+						<input
+							type="text"
+							id="edit-product-name"
+							class="form-input"
+							disabled
+						/>
+					</div>
+					<div class="form-group">
+						<label>Precio Venta</label>
+						<input
+							type="number"
+							id="edit-product-price"
+							class="form-input"
+							step="0.01"
+							min="0"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label>Cantidad Actual (En Tienda)</label>
+						<input
+							type="number"
+							id="edit-product-stock"
+							class="form-input"
+							min="0"
+							required
+						/>
+					</div>
+
+					<div class="modal-actions">
+						<button type="submit" class="btn-confirm">Guardar Cambios</button>
 					</div>
 				</form>
 			</div>
