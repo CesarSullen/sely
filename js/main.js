@@ -233,24 +233,79 @@ function renderHistory() {
 		now.getDate(),
 	).getTime();
 
-	let allEvents = db.sales.filter((sale) => {
+	const groupedSales = [];
+	const tickets = {};
+
+	db.sales.forEach((sale) => {
 		const saleDate = new Date(sale.date).getTime();
-		return saleDate >= startOfToday;
+		if (saleDate < startOfToday) return;
+
+		if (sale.ticket_id) {
+			if (!tickets[sale.ticket_id]) {
+				tickets[sale.ticket_id] = {
+					type: "ticket",
+					ticket_id: sale.ticket_id,
+					date: sale.date,
+					items: [],
+					total: 0,
+				};
+				groupedSales.push(tickets[sale.ticket_id]);
+			}
+			tickets[sale.ticket_id].items.push(sale);
+			tickets[sale.ticket_id].total += sale.total;
+		} else {
+			groupedSales.push({ ...sale, type: "sale" });
+		}
 	});
 
-	allEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
+	groupedSales.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-	if (allEvents.length === 0) {
+	if (groupedSales.length === 0) {
 		timeline.innerHTML =
 			'<p class="no-results">No has realizado ventas hoy</p>';
 		return;
 	}
 
-	allEvents.forEach((event) => {
+	groupedSales.forEach((event) => {
 		const date = new Date(event.date).toLocaleTimeString("es-ES", {
 			hour: "2-digit",
 			minute: "2-digit",
 		});
+
+		let contentHtml = "";
+		let totalDisplay = 0;
+
+		if (event.type === "ticket") {
+			totalDisplay = event.total;
+			const itemsHtml = event.items
+				.map(
+					(item) => `
+                <div class="timeline-info-row">
+                    <span>${item.product_name} x${item.quantity}</span>
+                    <span>$${item.total.toFixed(2)}</span>
+                </div>
+            `,
+				)
+				.join("");
+
+			contentHtml = `
+                <div class="timeline-main">
+                    <strong>Ticket de Venta</strong>
+                    <span>${event.items.length} ítems</span>
+                </div>
+                <div class="timeline-info-box">
+                    ${itemsHtml}
+                </div>
+            `;
+		} else {
+			totalDisplay = event.total;
+			contentHtml = `
+                <div class="timeline-main">
+                    <strong>${event.product_name}</strong>
+                    <span>${event.quantity} u</span>
+                </div>
+            `;
+		}
 
 		const html = `
             <div class="timeline-item">
@@ -258,13 +313,10 @@ function renderHistory() {
                     <img src="./assets/icons/arrow-circle-up.svg">
                 </div>
                 <div class="timeline-item-content">
-                    <div class="timeline-main">
-                        <strong>${event.product_name}</strong>
-						<span>${event.quantity} u</span>
-                    </div>
+                    ${contentHtml}
                     <div class="timeline-details">
                         <strong class="timeline-amount type-sale">
-                            +$${event.total.toFixed(2)}
+                            +$${totalDisplay.toFixed(2)}
                         </strong>
                         <span class="timeline-date">${date}</span>
                     </div>
@@ -308,7 +360,12 @@ function closeModal(modalId) {
 	}
 }
 
+let tempTicket = [];
+
 function openSaleModal() {
+	tempTicket = [];
+	renderTicket();
+
 	const select = document.getElementById("sale-product-select");
 
 	select.innerHTML =
@@ -321,41 +378,138 @@ function openSaleModal() {
 		select.appendChild(option);
 	});
 
+	select.onchange = (e) => {
+		const prod = db.products.find((p) => p.id === e.target.value);
+		if (prod) document.getElementById("sale-price").value = prod.price;
+		renderTicket();
+	};
+
 	document.getElementById("modal-sale").classList.add("active");
 }
 
-function handleSaleSubmit(event) {
-	event.preventDefault();
-
-	const productId = document.getElementById("sale-product-select").value.trim();
-	const quantityToSell = parseInt(
-		document.getElementById("sale-quantity").value,
-	);
-	const priceAtSale = parseFloat(document.getElementById("sale-price").value);
+function addToTicket() {
+	const productId = document.getElementById("sale-product-select").value;
+	const quantity = parseInt(document.getElementById("sale-quantity").value);
+	const price = parseFloat(document.getElementById("sale-price").value);
 	const product = db.products.find((p) => p.id === productId);
 
-	if (product && product.stock >= quantityToSell) {
-		product.stock -= quantityToSell;
-		product.price = priceAtSale;
-
-		db.sales.push({
-			id: `sale-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-			product_id: product.id,
-			product_name: product.name,
-			quantity: quantityToSell,
-			price_at_sale: priceAtSale,
-			total: priceAtSale * quantityToSell,
-			date: new Date().toISOString(),
-			type: "sale",
-		});
-
-		saveToStorage();
-		renderDashboard();
-		closeModal("modal-sale");
-		alert("Venta registrada con éxito.");
-	} else {
-		alert("Cantidad insuficiente en el inventario o producto no encontrado.");
+	if (!product || isNaN(quantity) || isNaN(price) || quantity <= 0) {
+		return alert("Por favor, completa los campos correctamente.");
 	}
+
+	if (quantity > product.stock) {
+		return alert(`Stock insuficiente. Disponible: ${product.stock}`);
+	}
+
+	tempTicket.push({
+		id: product.id,
+		name: product.name,
+		quantity: quantity,
+		price: price,
+		total: quantity * price,
+	});
+
+	document.getElementById("sale-product-select").value = "";
+	document.getElementById("sale-quantity").value = 1;
+	document.getElementById("sale-price").value = "";
+
+	renderTicket();
+}
+
+function renderTicket() {
+	const container = document.getElementById("ticket-items-container");
+	const totalDisplay = document.getElementById("ticket-total-amount");
+
+	container.innerHTML = "<h3>Ticket de Venta</h3>";
+	let grandTotal = 0;
+
+	if (tempTicket.length > 0) {
+		tempTicket.forEach((item, index) => {
+			grandTotal += item.total;
+			container.innerHTML += `
+                <div class="ticket-item">
+                    <div class="ticket-item-info">
+                        <strong>${item.name}</strong><br>
+                        <small>${item.quantity} x $${item.price.toFixed(2)}</small>
+                    </div>
+                    <div class="ticket-item-actions">
+                        <strong>$${item.total.toFixed(2)}</strong>
+                        <button class="btn-remove" onclick="removeFromTicket(${index})" type="button">
+                            <img src="../assets/icons/x-circle-fill.svg" class="icon-remove">
+                        </button>
+                    </div>
+                </div>
+            `;
+		});
+	} else {
+		const qty = parseInt(document.getElementById("sale-quantity").value) || 0;
+		const price = parseFloat(document.getElementById("sale-price").value) || 0;
+
+		if (document.getElementById("sale-product-select").value) {
+			grandTotal = qty * price;
+		}
+	}
+
+	totalDisplay.textContent = `$${grandTotal.toFixed(2)}`;
+}
+
+function removeFromTicket(index) {
+	tempTicket.splice(index, 1);
+	renderTicket();
+}
+
+function handleSaleSubmit() {
+	const productId = document.getElementById("sale-product-select").value;
+	const quantity = parseInt(document.getElementById("sale-quantity").value);
+	const price = parseFloat(document.getElementById("sale-price").value);
+
+	if (
+		tempTicket.length === 0 &&
+		productId &&
+		!isNaN(quantity) &&
+		!isNaN(price)
+	) {
+		const product = db.products.find((p) => p.id === productId);
+		if (product && quantity <= product.stock) {
+			tempTicket.push({
+				id: product.id,
+				name: product.name,
+				quantity: quantity,
+				price: price,
+				total: quantity * price,
+			});
+		}
+	}
+
+	if (tempTicket.length === 0) return alert("El ticket está vacío.");
+
+	const saleGroupId = tempTicket.length > 1 ? `ticket-${Date.now()}` : null;
+
+	tempTicket.forEach((item) => {
+		const product = db.products.find((p) => p.id === item.id);
+
+		if (product) {
+			product.stock -= item.quantity;
+			product.price = item.price;
+
+			db.sales.push({
+				id: `sale-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+				ticket_id: saleGroupId,
+				product_id: product.id,
+				product_name: product.name,
+				quantity: item.quantity,
+				price_at_sale: item.price,
+				total: item.total,
+				date: new Date().toISOString(),
+				type: "sale",
+			});
+		}
+	});
+
+	saveToStorage();
+	renderDashboard();
+	closeModal("modal-sale");
+	alert("Venta registrada con éxito.");
 }
 
 // Update sale price at selling
