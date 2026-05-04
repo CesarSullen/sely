@@ -1,4 +1,4 @@
-const CACHE_NAME = "sely-v1.6.4";
+const CACHE_NAME = "sely-v1.6.5";
 const STATIC_ASSETS = [
 	// Page
 	"./",
