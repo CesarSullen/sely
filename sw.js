@@ -1,4 +1,4 @@
-const CACHE_NAME = "sely-v1.7.1c";
+const CACHE_NAME = "sely-v1.7.3";
 const STATIC_ASSETS = [
 	// Page
 	"./",
@@ -13,6 +13,7 @@ const STATIC_ASSETS = [
 	"./assets/opengraph/stox-logo-text.png",
 
 	// UI Icons
+	"./assets/icons/arrow-circle-down.svg",
 	"./assets/icons/arrow-circle-up.svg",
 	"./assets/icons/arrows-clockwise.svg",
 	"./assets/icons/chart-line-up-duotone.svg",

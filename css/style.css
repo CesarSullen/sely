@@ -726,6 +726,10 @@ input[list]::-webkit-calendar-picker-indicator {
 	color: var(--accent);
 }
 
+.timeline-amount.type-receive {
+	color: #1140fc;
+}
+
 .timeline-info-box {
 	margin: 8px 0;
 	padding: 10px;
@@ -768,6 +772,11 @@ input[list]::-webkit-calendar-picker-indicator {
 .settings-card h3 {
 	font-size: 1.3rem;
 	margin-bottom: 1rem;
+}
+
+.settings-card .form-input {
+	margin-top: 1rem;
+	margin-bottom: 0;
 }
 
 .primary-btn {

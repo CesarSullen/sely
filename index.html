@@ -96,6 +96,20 @@
 			<section id="view-sync" class="view">
 				<div class="view-header"><h2>Sincronizar</h2></div>
 				<div class="settings-card">
+					<h3>Este Punto de Venta</h3>
+					<p>
+						Escribe un nombre para identificar este dispositivo en el historial
+						del manager.
+					</p>
+					<input
+						type="text"
+						id="pos-name-input"
+						class="form-input"
+						placeholder="Ej: Tienda Centro"
+						oninput="savePosName(this.value)"
+					/>
+				</div>
+				<div class="settings-card">
 					<h3>Cargar Inventario</h3>
 					<p>
 						Selecciona el archivo enviado por el dueño para actualizar precios y
@@ -146,7 +160,7 @@
 						/>
 					</div>
 
-					<span class="version-badge">v1.7.0</span>
+					<span class="version-badge">v1.7.3</span>
 
 					<div class="legal-links">
 						<a href="https://cesarsullen.github.io/links" target="_blank"
