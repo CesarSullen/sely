@@ -130,7 +130,7 @@
 						id="sely-link-code-section"
 						style="display: none; margin-top: 1rem"
 					>
-						<div class="form-group" style="margin-bottom: 0.8rem">
+						<div class="form-group">
 							<label>Código del Manager</label>
 							<input
 								type="text"
@@ -144,12 +144,24 @@
 							Vincular
 						</button>
 					</div>
+					<div style="margin-top: 1rem" class="card-header-actions">
+						<h3>Sincronizar cantidades con el manager</h3>
+						<label class="toggle-switch">
+							<input
+								type="checkbox"
+								id="sely-sync-stock-toggle"
+								onchange="handleSyncStockToggle(this.checked)"
+							/>
+							<span class="toggle-slider"></span>
+						</label>
+					</div>
+					<p class="setting-help" id="sely-sync-stock-help"></p>
 				</div>
 				<div class="settings-card">
-					<h3 class="card-header-actions">Cargar Inventario</h3>
+					<h3>Datos Locales</h3>
 					<p>
-						Selecciona el archivo enviado por el dueño para actualizar precios y
-						stock.
+						Carga el inventario enviado por el dueño o exporta tus ventas para
+						enviárselas.
 					</p>
 					<button
 						class="primary-btn"
@@ -165,10 +177,6 @@
 						accept=".json"
 						onchange="handleImport(this.files[0])"
 					/>
-				</div>
-				<div class="settings-card">
-					<h3 class="card-header-actions">Enviar Reporte</h3>
-					<p>Genera el archivo de ventas para enviárselo al dueño.</p>
 					<button class="primary-btn" onclick="exportSalesToOwner()">
 						<img src="./assets/icons/file-arrow-up.svg" />
 						Exportar Ventas
@@ -196,7 +204,7 @@
 						/>
 					</div>
 
-					<span class="version-badge">v1.8.0</span>
+					<span class="version-badge">v1.9.0</span>
 
 					<div class="legal-links">
 						<a href="https://cesarsullen.github.io/links" target="_blank"

@@ -730,6 +730,10 @@ input[list]::-webkit-calendar-picker-indicator {
 	color: #1140fc;
 }
 
+.timeline-amount.type-catalog {
+	color: hsl(210, 70%, 65%);
+}
+
 .timeline-info-box {
 	margin: 8px 0;
 	padding: 10px;
