@@ -96,7 +96,7 @@
 			<section id="view-sync" class="view">
 				<div class="view-header"><h2>Sincronizar</h2></div>
 				<div class="settings-card">
-					<h3>Este Punto de Venta</h3>
+					<h3 class="card-header-actions">Este Punto de Venta</h3>
 					<p>
 						Escribe un nombre para identificar este dispositivo en el historial
 						del manager.
@@ -110,7 +110,43 @@
 					/>
 				</div>
 				<div class="settings-card">
-					<h3>Cargar Inventario</h3>
+					<div class="card-header-actions">
+						<h3>Sincronización en la Nube</h3>
+						<label class="toggle-switch">
+							<input
+								type="checkbox"
+								id="sely-cloud-toggle"
+								onchange="handleSelyCloudToggle(this.checked)"
+							/>
+							<span class="toggle-slider"></span>
+						</label>
+					</div>
+					<p class="setting-help">
+						El respaldo en la nube le servirá para sincronizar las ventas con su
+						manager.
+					</p>
+					<div id="sely-cloud-info"></div>
+					<div
+						id="sely-link-code-section"
+						style="display: none; margin-top: 1rem"
+					>
+						<div class="form-group" style="margin-bottom: 0.8rem">
+							<label>Código del Manager</label>
+							<input
+								type="text"
+								id="sely-link-code-input"
+								class="form-input"
+								placeholder="Ej: KP-847293"
+								autocomplete="off"
+							/>
+						</div>
+						<button class="btn-confirm" onclick="submitLinkCode()">
+							Vincular
+						</button>
+					</div>
+				</div>
+				<div class="settings-card">
+					<h3 class="card-header-actions">Cargar Inventario</h3>
 					<p>
 						Selecciona el archivo enviado por el dueño para actualizar precios y
 						stock.
@@ -131,7 +167,7 @@
 					/>
 				</div>
 				<div class="settings-card">
-					<h3>Enviar Reporte</h3>
+					<h3 class="card-header-actions">Enviar Reporte</h3>
 					<p>Genera el archivo de ventas para enviárselo al dueño.</p>
 					<button class="primary-btn" onclick="exportSalesToOwner()">
 						<img src="./assets/icons/file-arrow-up.svg" />
@@ -139,7 +175,7 @@
 					</button>
 				</div>
 				<div class="settings-card">
-					<h3>Zona de Peligro</h3>
+					<h3 class="card-header-actions">Zona de Peligro</h3>
 					<p>
 						Borra permanentemente el inventario local y el historial de ventas
 						de este dispositivo.
@@ -160,7 +196,7 @@
 						/>
 					</div>
 
-					<span class="version-badge">v1.7.4</span>
+					<span class="version-badge">v1.8.0</span>
 
 					<div class="legal-links">
 						<a href="https://cesarsullen.github.io/links" target="_blank"
@@ -381,18 +417,16 @@
 					<li>Exportación de datos</li>
 					<li>Estadísticas detalladas</li>
 					<li>App para dependientes</li>
+					<li>Acceso a la nube</li>
 				</ul>
 
 				<div class="pricing-container">
 					<div class="pricing-options">
 						<div class="price-item">
-							<span>Saldo:</span> <strong>250 CUP</strong>
+							<span>Premium:</span> <strong>5000 CUP/año</strong>
 						</div>
 						<div class="price-item">
-							<span>Efectivo:</span> <strong>300 CUP</strong>
-						</div>
-						<div class="price-item">
-							<span>Transf.:</span> <strong>350 CUP</strong>
+							<span>Nube (opcional):</span> <strong>500 CUP/mes</strong>
 						</div>
 					</div>
 				</div>
