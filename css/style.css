@@ -29,9 +29,9 @@
 }
 
 :root {
-	--accent: hsl(270, 70%, 65%);
-	--alert: hsl(0, 100%, 65%);
-	--text-muted: hsl(0, 0%, 50%);
+	--accent: #a667e4;
+	--alert: #ff4d4d;
+	--text-muted: #808080;
 }
 
 body {
@@ -543,7 +543,7 @@ input[list]::-webkit-calendar-picker-indicator {
 	overflow-x: auto;
 	padding: 10px 0;
 	scrollbar-width: none;
-
+	height: 60px;
 	mask-image: linear-gradient(
 		to right,
 		transparent 0%,
@@ -897,4 +897,10 @@ input[list]::-webkit-calendar-picker-indicator {
 	letter-spacing: 2px;
 	color: var(--accent);
 	margin: 0.5rem 0;
+}
+
+.sync-timestamp {
+	font-size: 0.8rem;
+	color: var(--text-muted);
+	margin-top: 0.5rem;
 }
