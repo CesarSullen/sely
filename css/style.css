@@ -713,6 +713,7 @@ input[list]::-webkit-calendar-picker-indicator {
 .timeline-main {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	margin-bottom: 0.2rem;
 }
 
@@ -754,8 +755,17 @@ input[list]::-webkit-calendar-picker-indicator {
 	font-weight: 600;
 }
 
-.timeline-main {
-	align-items: center;
+.timeline-amount.type-return {
+	color: var(--alert);
+}
+
+.timeline-item.returned {
+	opacity: 0.8;
+}
+
+.timeline-returned-badge {
+	width: 12px;
+	height: auto;
 }
 
 .settings-card {
@@ -922,6 +932,7 @@ input[list]::-webkit-calendar-picker-indicator {
 .toast {
 	background: hsla(0, 0%, 18%, 0.97);
 	border: 1px solid hsla(0, 0%, 100%, 0.1);
+	backdrop-filter: blur(8px);
 	border-radius: 12px;
 	padding: 0.65rem 1.2rem;
 	font-size: 0.88rem;
