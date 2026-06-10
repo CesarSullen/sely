@@ -1,4 +1,4 @@
-const CACHE_NAME = "sely-v2.1.3";
+const CACHE_NAME = "sely-v2.1.4";
 const STATIC_ASSETS = [
 	// Page
 	"./",
@@ -33,9 +33,9 @@ const STATIC_ASSETS = [
 	"./assets/icons/x-circle.svg",
 
 	// Typography
-	"./typography/Outfit-Regular.ttf",
-	"./typography/Outfit-Bold.ttf",
-	"./typography/Outfit-SemiBold.ttf",
+	"./typography/Outfit-Regular.woff2",
+	"./typography/Outfit-Bold.woff2",
+	"./typography/Outfit-SemiBold.woff2",
 ];
 
 // Install

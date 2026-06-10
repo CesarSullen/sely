@@ -32,6 +32,25 @@
 			<h1 class="app-name">SELY</h1>
 		</header>
 
+		<nav class="bottom-nav">
+			<button class="nav-item active" onclick="switchView('view-home', this)">
+				<img src="./assets/icons/house.svg" />
+				<span>Inicio</span>
+			</button>
+			<button class="nav-item" onclick="switchView('view-inventory', this)">
+				<img src="./assets/icons/package.svg" />
+				<span>Inventario</span>
+			</button>
+			<button class="nav-item" onclick="switchView('view-history', this)">
+				<img src="./assets/icons/receipt.svg" />
+				<span>Historial</span>
+			</button>
+			<button class="nav-item" onclick="switchView('view-sync', this)">
+				<img src="./assets/icons/arrows-clockwise.svg" />
+				<span>Sync</span>
+			</button>
+		</nav>
+
 		<main id="app-container" class="app-container">
 			<section id="view-home" class="view active">
 				<div class="quick-actions">
@@ -206,7 +225,7 @@
 						</a>
 					</div>
 
-					<span class="version-badge">v2.1.3</span>
+					<span class="version-badge">v2.1.4</span>
 
 					<div class="legal-links">
 						<a href="https://cesarsullen.github.io/links" target="_blank"
@@ -230,25 +249,6 @@
 				</div>
 			</section>
 		</main>
-
-		<nav class="bottom-nav">
-			<button class="nav-item active" onclick="switchView('view-home', this)">
-				<img src="./assets/icons/house.svg" />
-				<span>Inicio</span>
-			</button>
-			<button class="nav-item" onclick="switchView('view-inventory', this)">
-				<img src="./assets/icons/package.svg" />
-				<span>Inventario</span>
-			</button>
-			<button class="nav-item" onclick="switchView('view-history', this)">
-				<img src="./assets/icons/receipt.svg" />
-				<span>Historial</span>
-			</button>
-			<button class="nav-item" onclick="switchView('view-sync', this)">
-				<img src="./assets/icons/arrows-clockwise.svg" />
-				<span>Sync</span>
-			</button>
-		</nav>
 
 		<div id="modal-supply" class="modal">
 			<div class="modal-content">
@@ -451,6 +451,7 @@
 						id="premium-code"
 						class="form-input premium-code"
 						placeholder="XXXX-XXXX-XXXX-XXXX"
+						autocomplete="off"
 					/>
 				</div>
 
