@@ -59,6 +59,7 @@ body.modal-open {
 		max-width: 100%;
 		padding: 0;
 		display: flex;
+		align-items: flex-start;
 		touch-action: auto;
 	}
 }
@@ -79,9 +80,11 @@ img {
 @media (min-width: 768px) {
 	.app-container {
 		flex: 1;
+		min-width: 0;
 		padding: 2rem 3rem;
 		max-width: 860px;
-		margin-left: 330px;
+		margin: 0 auto;
+		overflow-y: auto;
 	}
 }
 
@@ -236,20 +239,23 @@ img {
 }
 @media (min-width: 768px) {
 	.bottom-nav {
+		position: sticky;
+		top: 0;
+		left: auto;
+		bottom: auto;
+		transform: none;
 		width: 220px;
-		height: 100dvh;
+		min-width: 220px;
+		height: 100vh;
 		border-radius: 0;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: flex-start;
-		padding: 5rem 1rem;
+		padding: 2rem 1rem;
 		gap: 0.5rem;
 		border: none;
 		border-right: 1px solid hsla(0, 0%, 100%, 0.06);
 		background: hsla(0, 0%, 5%, 0.95);
-		transform: none;
-		left: 0;
-		z-index: 0;
 	}
 }
 
