@@ -225,7 +225,7 @@
 						</a>
 					</div>
 
-					<span class="version-badge">v2.1.7</span>
+					<span class="version-badge">v3.0.0</span>
 
 					<div class="icon-links">
 						<a href="https://t.me/stxapp" target="_blank">
@@ -269,7 +269,7 @@
 				</div>
 				<form id="form-supply" onsubmit="handleSupplySubmit(event)">
 					<div class="form-group">
-						<label>Producto (existente)</label>
+						<label>Producto</label>
 						<input
 							list="product-list"
 							id="supply-product-input"
@@ -347,9 +347,11 @@
 							<option value="Transferencia">Transferencia</option>
 						</select>
 					</div>
-					<button type="button" class="btn-ghost" onclick="addToTicket()">
-						Añadir al Ticket
-					</button>
+					<div class="form-group">
+						<button type="button" class="btn-ghost" onclick="addToTicket()">
+							Añadir al Ticket
+						</button>
+					</div>
 				</div>
 
 				<div id="ticket-section" class="ticket-section">
@@ -380,47 +382,121 @@
 		<div id="modal-edit" class="modal">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2>Ajustar Inventario Local</h2>
+					<h2 id="edit-modal-title">Editar</h2>
 					<button class="modal-header-btn" onclick="closeModal('modal-edit')">
 						<img src="./assets/icons/x-circle.svg" />
 					</button>
 				</div>
 				<form id="form-edit-product" onsubmit="handleEditSubmit(event)">
 					<input type="hidden" id="edit-product-id" />
+					<input type="hidden" id="edit-product-type" />
 
 					<div class="form-group">
-						<label>Nombre del Producto</label>
+						<label id="edit-name-label">Nombre</label>
 						<input
 							type="text"
 							id="edit-product-name"
 							class="form-input"
 							disabled
-						/>
-					</div>
-					<div class="form-group">
-						<label>Precio Venta</label>
-						<input
-							type="number"
-							id="edit-product-price"
-							class="form-input"
-							step="0.01"
-							min="0"
-							required
-						/>
-					</div>
-					<div class="form-group">
-						<label>Cantidad Actual (En Tienda)</label>
-						<input
-							type="number"
-							id="edit-product-stock"
-							class="form-input"
-							min="0"
 							required
 						/>
 					</div>
 
+					<div id="edit-product-only-fields">
+						<div class="form-group">
+							<label>Precio Venta</label>
+							<input
+								type="number"
+								id="edit-product-price"
+								class="form-input"
+								step="0.01"
+								min="0"
+							/>
+							<label
+								>Compra Prom:
+								<strong id="edit-avg-cost" class="avg-cost">0</strong></label
+							>
+						</div>
+						<div class="form-row">
+							<div class="form-group">
+								<label>Cantidad Actual</label>
+								<input
+									type="number"
+									id="edit-product-stock"
+									class="form-input"
+									min="0"
+									step="any"
+								/>
+							</div>
+							<div class="form-group">
+								<label>Inv. mínimo</label>
+								<input
+									type="number"
+									id="edit-product-threshold"
+									class="form-input"
+									min="0"
+									placeholder="Ej: 15"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div id="edit-service-only-fields" style="display: none">
+						<div class="form-group">
+							<label id="edit-service-price-label">Precio</label>
+							<input
+								type="number"
+								id="edit-service-price"
+								class="form-input"
+								step="0.01"
+								min="0"
+							/>
+						</div>
+						<div class="ticket-section">
+							<label>Materiales por sesión</label>
+							<div class="form-row">
+								<div class="form-group" style="flex: 2">
+									<select id="edit-recipe-product-select" class="form-input">
+										<option value="">Selecciona producto...</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<input
+										type="number"
+										id="edit-recipe-quantity"
+										class="form-input"
+										placeholder="Cant."
+										min="0.01"
+										step="0.01"
+									/>
+								</div>
+								<div class="form-group" style="flex: 0.5">
+									<button
+										type="button"
+										id="btn-add-edit-recipe-ingredient"
+										class="btn-ghost"
+									>
+										+
+									</button>
+								</div>
+							</div>
+
+							<div class="ticket-section">
+								<div id="edit-recipe-list" class="ticket-list"></div>
+							</div>
+						</div>
+					</div>
+
 					<div class="modal-actions">
-						<button type="submit" class="btn-confirm">Guardar Cambios</button>
+						<button type="submit" class="btn-confirm">Guardar</button>
+						<button
+							type="button"
+							class="btn-delete"
+							onclick="handleDeleteProduct()"
+						>
+							Eliminar
+						</button>
 					</div>
 				</form>
 			</div>
