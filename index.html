@@ -225,7 +225,7 @@
 						</a>
 					</div>
 
-					<span class="version-badge">v3.0.0</span>
+					<span class="version-badge">v3.1.0</span>
 
 					<div class="icon-links">
 						<a href="https://t.me/stxapp" target="_blank">
@@ -509,48 +509,68 @@
 				</div>
 
 				<ul class="premium-features">
-					<li>Ventas múltiples</li>
-					<li>Acceso al historial</li>
 					<li>Inventario ilimitado</li>
+					<li>Ventas múltiples</li>
+					<li>Historial</li>
 					<li>Exportación de datos</li>
-					<li>Estadísticas detalladas</li>
-					<li>App para dependientes</li>
-					<li>Acceso a la nube</li>
+					<li>Estadísticas</li>
+					<li>Modo dependientes</li>
 				</ul>
 
-				<div class="pricing-container">
-					<div class="pricing-options">
-						<div class="price-item">
-							<span>Premium:</span> <strong>5000 CUP/año</strong>
-						</div>
-						<div class="price-item">
-							<span>Nube (opcional):</span> <strong>500 CUP/mes</strong>
-						</div>
+				<div class="form-group">
+					<div
+						style="
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							margin-bottom: 0.5rem;
+						"
+					>
+						<h2>Sincronizar stock</h2>
+						<label class="toggle-switch" style="margin-bottom: 0">
+							<input
+								type="checkbox"
+								id="modal-sync-stock-toggle"
+								onchange="handleSyncStockToggle(this.checked)"
+							/>
+							<span class="toggle-slider"></span>
+						</label>
 					</div>
+
+					<p>Actívalo si compartes el mismo inventario que tu manager</p>
 				</div>
 
 				<div class="form-group">
-					<label>Introduce tu código</label>
+					<label>Código del Manager</label>
 					<input
 						type="text"
-						id="premium-code"
-						class="form-input premium-code"
-						placeholder="XXXX-XXXX-XXXX-XXXX"
+						id="premium-link-code-input"
+						class="form-input"
+						placeholder="Ej: KP-847293"
 						autocomplete="off"
 					/>
 				</div>
 
-				<button class="btn-confirm" onclick="validatePremiumCode()">
-					Activar Premium
-				</button>
+				<div class="modal-actions">
+					<button
+						type="button"
+						class="btn-confirm"
+						onclick="submitPremiumLinkCode()"
+					>
+						Activar SELY
+					</button>
+				</div>
 
-				<a
-					href="https://wa.me/5351643954?text=Hola, quiero obtener un código Premium para SELY."
-					target="_blank"
-					class="contact-link"
-				>
-					¿No tienes código? Click aquí.
-				</a>
+				<p style="text-align: center; margin-top: 0.8rem">
+					¿No tienes código?
+					<a
+						href="https://wa.me/5351643954?text=Hola%2C%20quiero%20usar%20SELY."
+						target="_blank"
+						class="contact-link"
+					>
+						Contacta con el manager.
+					</a>
+				</p>
 			</div>
 		</div>
 

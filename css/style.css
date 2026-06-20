@@ -556,6 +556,13 @@ input[list]::-webkit-calendar-picker-indicator {
 	list-style: none;
 	margin-bottom: 0.5rem;
 }
+@media (min-width: 768px) {
+	.premium-features {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		text-wrap: nowrap;
+	}
+}
 
 .premium-features li {
 	display: flex;
@@ -573,36 +580,6 @@ input[list]::-webkit-calendar-picker-indicator {
 	background-image: url("../assets/icons/check-circle-fill.svg");
 	background-size: contain;
 	background-repeat: no-repeat;
-}
-
-.pricing-container {
-	padding: 1rem;
-	background: #1e1e1e;
-	border-radius: 12px;
-	margin-bottom: 0.5rem;
-}
-
-.pricing-options {
-	display: flex;
-	justify-content: space-between;
-	gap: 10px;
-}
-
-.price-item {
-	font-size: 0.8rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.price-item strong {
-	color: var(--accent);
-	font-size: 1rem;
-	margin-top: 2px;
-}
-
-.premium-code {
-	text-align: center;
 }
 
 .contact-link {
