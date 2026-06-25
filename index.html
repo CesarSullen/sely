@@ -225,7 +225,7 @@
 						</a>
 					</div>
 
-					<span class="version-badge">v3.1.2</span>
+					<span class="version-badge">v3.2.0</span>
 
 					<div class="icon-links">
 						<a href="https://t.me/stxapp" target="_blank">
@@ -348,6 +348,18 @@
 						</select>
 					</div>
 					<div class="form-group">
+						<label
+							>Descripción
+							<small style="color: var(--text-muted)">(opcional)</small></label
+						>
+						<textarea
+							id="sale-description"
+							class="form-input sale-description-input"
+							placeholder="Ej: Juan García: 555-1234"
+							rows="1"
+						></textarea>
+					</div>
+					<div class="form-group">
 						<button type="button" class="btn-ghost" onclick="addToTicket()">
 							Añadir al Ticket
 						</button>
@@ -419,7 +431,7 @@
 						</div>
 						<div class="form-row">
 							<div class="form-group">
-								<label>Cantidad Actual</label>
+								<label>Cant. Actual</label>
 								<input
 									type="number"
 									id="edit-product-stock"
