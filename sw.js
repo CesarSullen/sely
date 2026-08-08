@@ -1,11 +1,10 @@
-const CACHE_NAME = "sely-v3.2.1";
+const CACHE_NAME = "sely-v4.0.0";
 const STATIC_ASSETS = [
 	// Page
 	"./",
 	"./index.html",
 	"./css/style.css",
 	"./js/main.js",
-	"./js/supabase-config.js",
 	"./manifest.json",
 
 	// App Icons
