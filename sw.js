@@ -1,10 +1,11 @@
-const CACHE_NAME = "sely-v4.1.1";
+const CACHE_NAME = "sely-v4.1.2";
 const STATIC_ASSETS = [
   // Page
   "./",
   "./index.html",
   "./css/style.css",
   "./js/main.js",
+  "./js/crypto-js.min.js",
   "./manifest.json",
 
   // App Icons
