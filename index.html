@@ -1,625 +1,625 @@
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-		/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-		<meta property="og:title" content="Sely" />
-		<meta property="og:description" content="App complemento de STOX" />
-		<meta property="og:type" content="website" />
-		<meta property="og:image" content="./assets/opengraph/opengraph.png" />
+    <meta property="og:title" content="Sely" />
+    <meta property="og:description" content="App complemento de STOX" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/opengraph/opengraph.png" />
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-title" content="SELY" />
-		<meta name="theme-color" content="#0D0D0D" />
-		<meta
-			name="apple-mobile-web-app-status-bar-style"
-			content="black-translucent"
-		/>
-		<link rel="icon" type="image/png" href="./assets/opengraph/logo.png" />
-		<link rel="apple-touch-icon" href="./assets/opengraph/logo.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="SELY" />
+    <meta name="theme-color" content="#0D0D0D" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="icon" type="image/png" href="./assets/opengraph/logo.png" />
+    <link rel="apple-touch-icon" href="./assets/opengraph/logo.png" />
 
-		<link rel="stylesheet" href="./css/style.css" />
-		<link rel="manifest" href="./manifest.json" />
-		<title>SELY</title>
-	</head>
-	<body>
-		<header class="main-header">
-			<h1 class="app-name">SELY</h1>
-		</header>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>SELY</title>
+  </head>
+  <body>
+    <header class="main-header">
+      <h1 class="app-name">SELY</h1>
+    </header>
 
-		<nav class="bottom-nav">
-			<button class="nav-item active" onclick="switchView('view-home', this)">
-				<img src="./assets/icons/house.svg" />
-				<span>Inicio</span>
-			</button>
-			<button class="nav-item" onclick="switchView('view-inventory', this)">
-				<img src="./assets/icons/package.svg" />
-				<span>Inventario</span>
-			</button>
-			<button class="nav-item" onclick="switchView('view-history', this)">
-				<img src="./assets/icons/receipt.svg" />
-				<span>Historial</span>
-			</button>
-			<button class="nav-item" onclick="switchView('view-sync', this)">
-				<img src="./assets/icons/arrows-clockwise.svg" />
-				<span>Sync</span>
-			</button>
-		</nav>
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchView('view-home', this)">
+        <img src="./assets/icons/house.svg" />
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" onclick="switchView('view-inventory', this)">
+        <img src="./assets/icons/package.svg" />
+        <span>Inventario</span>
+      </button>
+      <button class="nav-item" onclick="switchView('view-history', this)">
+        <img src="./assets/icons/receipt.svg" />
+        <span>Historial</span>
+      </button>
+      <button class="nav-item" onclick="switchView('view-sync', this)">
+        <img src="./assets/icons/arrows-clockwise.svg" />
+        <span>Sync</span>
+      </button>
+    </nav>
 
-		<main id="app-container" class="app-container">
-			<section id="view-home" class="view active">
-				<div class="quick-actions">
-					<div class="action-card" onclick="openSupplyModal()">
-						<div class="action-card-icon">
-							<img src="./assets/icons/plus.svg" />
-						</div>
-						<h3>Agregar</h3>
-					</div>
+    <main id="app-container" class="app-container">
+      <section id="view-home" class="view active">
+        <div class="quick-actions">
+          <div class="action-card" onclick="openSupplyModal()">
+            <div class="action-card-icon">
+              <img src="./assets/icons/plus.svg" />
+            </div>
+            <h3>Agregar</h3>
+          </div>
 
-					<div class="action-card" onclick="openSaleModal()">
-						<div class="action-card-icon">
-							<img src="./assets/icons/handbag-simple.svg" />
-						</div>
-						<h3>Vender</h3>
-					</div>
-				</div>
+          <div class="action-card" onclick="openSaleModal()">
+            <div class="action-card-icon">
+              <img src="./assets/icons/handbag-simple.svg" />
+            </div>
+            <h3>Vender</h3>
+          </div>
+        </div>
 
-				<div class="home-stats">
-					<div class="stat-card">
-						<div class="stat-header">
-							<img src="./assets/icons/tag-duotone.svg" class="stat-icon" />
-							<span class="stat-label">Ventas de Hoy</span>
-						</div>
-						<h3 id="home-stat-sales" class="stat-value">0</h3>
-					</div>
-					<div class="stat-card">
-						<div class="stat-header">
-							<img
-								src="./assets/icons/chart-line-up-duotone.svg"
-								class="stat-icon"
-							/>
-							<span class="stat-label">Ingresos de Hoy</span>
-						</div>
-						<h3 id="home-stat-income" class="stat-value">$0.00</h3>
-					</div>
-				</div>
-			</section>
+        <div class="home-stats">
+          <div class="stat-card">
+            <div class="stat-header">
+              <img src="./assets/icons/tag-duotone.svg" class="stat-icon" />
+              <span class="stat-label">Ventas de Hoy</span>
+            </div>
+            <h3 id="home-stat-sales" class="stat-value">0</h3>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <img
+                src="./assets/icons/chart-line-up-duotone.svg"
+                class="stat-icon"
+              />
+              <span class="stat-label">Ingresos de Hoy</span>
+            </div>
+            <h3 id="home-stat-income" class="stat-value">$0.00</h3>
+          </div>
+        </div>
+      </section>
 
-			<section id="view-inventory" class="view">
-				<div class="view-header">
-					<h2>Inventario</h2>
-				</div>
-				<div class="search-box">
-					<img src="./assets/icons/magnifying-glass.svg" />
-					<input
-						type="text"
-						placeholder="Buscar producto..."
-						id="inventory-search"
-						oninput="handleSearch(event)"
-					/>
-				</div>
-				<div id="category-filters" class="category-pills-container"></div>
-				<div id="inventory-list" class="inventory-list"></div>
-			</section>
+      <section id="view-inventory" class="view">
+        <div class="view-header">
+          <h2>Inventario</h2>
+        </div>
+        <div class="search-box">
+          <img src="./assets/icons/magnifying-glass.svg" />
+          <input
+            type="text"
+            placeholder="Buscar producto..."
+            id="inventory-search"
+            oninput="handleSearch(event)"
+          />
+        </div>
+        <div id="category-filters" class="category-pills-container"></div>
+        <div id="inventory-list" class="inventory-list"></div>
+      </section>
 
-			<section id="view-history" class="view">
-				<div class="view-header"><h2>Mis Ventas</h2></div>
-				<div id="unified-timeline" class="unified-timeline"></div>
-			</section>
+      <section id="view-history" class="view">
+        <div class="view-header"><h2>Mis Ventas</h2></div>
+        <div id="unified-timeline" class="unified-timeline"></div>
+      </section>
 
-			<section id="view-sync" class="view">
-				<div class="view-header"><h2>Sincronizar</h2></div>
-				<div class="settings-card">
-					<h3 class="card-header-actions">Este Punto de Venta</h3>
-					<p>
-						Escribe un nombre para identificar este dispositivo en el historial
-						del manager.
-					</p>
-					<input
-						type="text"
-						id="pos-name-input"
-						class="form-input"
-						placeholder="Ej: Tienda Centro"
-						oninput="savePosName(this.value)"
-					/>
-				</div>
-				<div class="settings-card">
-					<div class="card-header-actions">
-						<h3>Sincronización en la Nube</h3>
-						<label class="toggle-switch">
-							<input
-								type="checkbox"
-								id="sely-cloud-toggle"
-								onchange="handleSelyCloudToggle(this.checked)"
-							/>
-							<span class="toggle-slider"></span>
-						</label>
-					</div>
-					<p class="setting-help">
-						El respaldo en la nube le servirá para sincronizar las ventas con su
-						manager.
-					</p>
-					<div id="sely-cloud-info"></div>
-					<div
-						id="sely-link-code-section"
-						style="display: none; margin-top: 1rem"
-					>
-						<div class="form-group">
-							<label>Código del Manager</label>
-							<input
-								type="text"
-								id="sely-link-code-input"
-								class="form-input"
-								placeholder="Ej: KP-847293"
-								autocomplete="off"
-							/>
-						</div>
-						<button class="btn-confirm" onclick="submitLinkCode()">
-							Vincular
-						</button>
-					</div>
-					<div style="margin-top: 1rem" class="card-header-actions">
-						<h3>Sincronizar cantidades con el manager</h3>
-						<label class="toggle-switch">
-							<input
-								type="checkbox"
-								id="sely-sync-stock-toggle"
-								onchange="handleSyncStockToggle(this.checked)"
-							/>
-							<span class="toggle-slider"></span>
-						</label>
-					</div>
-					<p class="setting-help" id="sely-sync-stock-help"></p>
-				</div>
-				<div class="settings-card">
-					<h3>Datos Locales</h3>
-					<p>
-						Carga el inventario enviado por el dueño o exporta tus ventas para
-						enviárselas.
-					</p>
-					<button
-						class="primary-btn"
-						onclick="document.getElementById('input-import').click()"
-					>
-						<img src="./assets/icons/file-arrow-down.svg" />
-						Cargar Datos
-					</button>
-					<input
-						type="file"
-						id="input-import"
-						hidden
-						accept=".json"
-						onchange="handleImport(this.files[0])"
-					/>
-					<button class="primary-btn" onclick="exportSalesToOwner()">
-						<img src="./assets/icons/file-arrow-up.svg" />
-						Exportar Ventas
-					</button>
-				</div>
-				<div class="settings-card">
-					<h3 class="card-header-actions">Zona de Peligro</h3>
-					<p>
-						Borra permanentemente el inventario local y el historial de ventas
-						de este dispositivo.
-					</p>
-					<button
-						class="btn-delete"
-						style="margin-top: 1rem"
-						onclick="clearDatabase()"
-					>
-						Borrar todos los datos
-					</button>
-				</div>
-				<div class="settings-card">
-					<div class="companies-logos">
-						<a href="https://cesarsullen.github.io/getstox" target="_blank">
-							<img
-								src="./assets/opengraph/stox-logo-text.png"
-								class="company-logo"
-							/>
-						</a>
-					</div>
+      <section id="view-sync" class="view">
+        <div class="view-header"><h2>Sincronizar</h2></div>
+        <div class="settings-card">
+          <h3 class="card-header-actions">Este Punto de Venta</h3>
+          <p>
+            Escribe un nombre para identificar este dispositivo en el historial
+            del manager.
+          </p>
+          <input
+            type="text"
+            id="pos-name-input"
+            class="form-input"
+            placeholder="Ej: Tienda Centro"
+            oninput="savePosName(this.value)"
+          />
+        </div>
+        <div class="settings-card">
+          <div class="card-header-actions">
+            <h3>Sincronización en la Nube</h3>
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                id="sely-cloud-toggle"
+                onchange="handleSelyCloudToggle(this.checked)"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p class="setting-help">
+            El respaldo en la nube le servirá para sincronizar las ventas con su
+            manager.
+          </p>
+          <div id="sely-cloud-info"></div>
+          <div
+            id="sely-link-code-section"
+            style="display: none; margin-top: 1rem"
+          >
+            <div class="form-group">
+              <label>Código del Manager</label>
+              <input
+                type="text"
+                id="sely-link-code-input"
+                class="form-input"
+                placeholder="Ej: KP-847293"
+                autocomplete="off"
+              />
+            </div>
+            <button class="btn-confirm" onclick="submitLinkCode()">
+              Vincular
+            </button>
+          </div>
+          <div style="margin-top: 1rem" class="card-header-actions">
+            <h3>Sincronizar cantidades con el manager</h3>
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                id="sely-sync-stock-toggle"
+                onchange="handleSyncStockToggle(this.checked)"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <p class="setting-help" id="sely-sync-stock-help"></p>
+        </div>
+        <div class="settings-card">
+          <h3>Datos Locales</h3>
+          <p>
+            Carga el inventario enviado por el dueño o exporta tus ventas para
+            enviárselas.
+          </p>
+          <button
+            class="primary-btn"
+            onclick="document.getElementById('input-import').click()"
+          >
+            <img src="./assets/icons/file-arrow-down.svg" />
+            Cargar Datos
+          </button>
+          <input
+            type="file"
+            id="input-import"
+            hidden
+            accept=".json"
+            onchange="handleImport(this.files[0])"
+          />
+          <button class="primary-btn" onclick="exportSalesToOwner()">
+            <img src="./assets/icons/file-arrow-up.svg" />
+            Exportar Ventas
+          </button>
+        </div>
+        <div class="settings-card">
+          <h3 class="card-header-actions">Zona de Peligro</h3>
+          <p>
+            Borra permanentemente el inventario local y el historial de ventas
+            de este dispositivo.
+          </p>
+          <button
+            class="btn-delete"
+            style="margin-top: 1rem"
+            onclick="clearDatabase()"
+          >
+            Borrar todos los datos
+          </button>
+        </div>
+        <div class="settings-card">
+          <div class="companies-logos">
+            <a href="https://cesarsullen.github.io/getstox" target="_blank">
+              <img
+                src="./assets/opengraph/stox-logo-text.png"
+                class="company-logo"
+              />
+            </a>
+          </div>
 
-					<span class="version-badge">v4.0.1</span>
+          <span class="version-badge">v4.1.1</span>
 
-					<div class="icon-links">
-						<a href="https://t.me/stxapp" target="_blank">
-							<img src="./assets/icons/telegram.svg" />
-						</a>
-						<a href="https://synthocean.com" target="_blank">
-							<img src="./assets/opengraph/synthocean-logo.svg" />
-						</a>
-					</div>
+          <div class="icon-links">
+            <a href="https://t.me/stxapp" target="_blank">
+              <img src="./assets/icons/telegram.svg" />
+            </a>
+            <a href="https://synthocean.com" target="_blank">
+              <img src="./assets/opengraph/synthocean-logo.svg" />
+            </a>
+          </div>
 
-					<div class="legal-links">
-						<a href="https://cesarsullen.github.io/links" target="_blank"
-							>Desarrollado por <strong>Saru</strong></a
-						>
-						<a href="https://cesarsullen.github.io/views/donations"
-							>Apoyar el proyecto</a
-						>
-						<a
-							href="https://wa.me/5351643954?text=Hola. Me gustaría informar de un problema en STOX."
-							target="_blank"
-							>Informar de un problema</a
-						>
-						<a
-							href="https://wa.me/5351643954?text=Hola. Me gustaría obtener información sobre cómo obtener una web para mi negocio."
-							target="_blank"
-							>Crea la web de tu negocio</a
-						>
-						<p class="copyright">© 2026 SELY</p>
-					</div>
-				</div>
-			</section>
-		</main>
+          <div class="legal-links">
+            <a href="https://cesarsullen.github.io/links" target="_blank"
+              >Desarrollado por <strong>Saru</strong></a
+            >
+            <a href="https://cesarsullen.github.io/views/donations"
+              >Apoyar el proyecto</a
+            >
+            <a
+              href="https://wa.me/5351643954?text=Hola. Me gustaría informar de un problema en STOX."
+              target="_blank"
+              >Informar de un problema</a
+            >
+            <a
+              href="https://wa.me/5351643954?text=Hola. Me gustaría obtener información sobre cómo obtener una web para mi negocio."
+              target="_blank"
+              >Crea la web de tu negocio</a
+            >
+            <p class="copyright">© 2026 SELY</p>
+          </div>
+        </div>
+      </section>
+    </main>
 
-		<div id="modal-supply" class="modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>Recibir Mercancía</h2>
-					<button class="modal-header-btn" onclick="closeModal('modal-supply')">
-						<img src="./assets/icons/x-circle.svg" />
-					</button>
-				</div>
-				<form id="form-supply" onsubmit="handleSupplySubmit(event)">
-					<div class="form-group">
-						<label>Producto</label>
-						<input
-							list="product-list"
-							id="supply-product-input"
-							class="form-input"
-							placeholder="Escribe para buscar..."
-							required
-						/>
-						<datalist id="product-list"></datalist>
-					</div>
+    <div id="modal-supply" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Recibir Mercancía</h2>
+          <button class="modal-header-btn" onclick="closeModal('modal-supply')">
+            <img src="./assets/icons/x-circle.svg" />
+          </button>
+        </div>
+        <form id="form-supply" onsubmit="handleSupplySubmit(event)">
+          <div class="form-group">
+            <label>Producto</label>
+            <input
+              list="product-list"
+              id="supply-product-input"
+              class="form-input"
+              placeholder="Escribe para buscar..."
+              required
+            />
+            <datalist id="product-list"></datalist>
+          </div>
 
-					<div class="form-group">
-						<label>Cantidad Recibida</label>
-						<input
-							type="number"
-							id="supply-quantity"
-							class="form-input"
-							min="1"
-							placeholder="Ej: 1"
-							required
-						/>
-					</div>
+          <div class="form-group">
+            <label>Cantidad Recibida</label>
+            <input
+              type="number"
+              id="supply-quantity"
+              class="form-input"
+              min="1"
+              placeholder="Ej: 1"
+              required
+            />
+          </div>
 
-					<div class="modal-actions">
-						<button type="submit" class="btn-confirm">
-							Añadir al Inventario
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
+          <div class="modal-actions">
+            <button type="submit" class="btn-confirm">
+              Añadir al Inventario
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-		<div id="modal-sale" class="modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>Registrar Venta</h2>
-					<button class="modal-header-btn" onclick="closeModal('modal-sale')">
-						<img src="./assets/icons/x-circle.svg" />
-					</button>
-				</div>
+    <div id="modal-sale" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Registrar Venta</h2>
+          <button class="modal-header-btn" onclick="closeModal('modal-sale')">
+            <img src="./assets/icons/x-circle.svg" />
+          </button>
+        </div>
 
-				<div id="sale-input-section" class="sale-input-section">
-					<div
-						id="sale-services-filter-row"
-						style="
-							display: none;
-							justify-content: space-between;
-							align-items: center;
-						"
-					>
-						<label>Solo servicios</label>
-						<label class="toggle-switch">
-							<input
-								type="checkbox"
-								id="sale-services-only-toggle"
-								onchange="onSaleServicesToggle(this.checked)"
-							/>
-							<span class="toggle-slider"></span>
-						</label>
-					</div>
-					<div class="form-group">
-						<label>Producto o servicio</label>
-						<select id="sale-product-select" class="form-input"></select>
-					</div>
+        <div id="sale-input-section" class="sale-input-section">
+          <div
+            id="sale-services-filter-row"
+            style="
+              display: none;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <label>Solo servicios</label>
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                id="sale-services-only-toggle"
+                onchange="onSaleServicesToggle(this.checked)"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Producto o servicio</label>
+            <select id="sale-product-select" class="form-input"></select>
+          </div>
 
-					<div class="form-row">
-						<div class="form-group">
-							<label>Cant.</label>
-							<input
-								type="number"
-								id="sale-quantity"
-								class="form-input"
-								min="1"
-								placeholder="Ej: 1"
-								oninput="renderTicket()"
-							/>
-						</div>
-						<div class="form-group">
-							<label>Precio (u)</label>
-							<input
-								type="number"
-								id="sale-price"
-								class="form-input"
-								placeholder="0.00"
-								step="0.01"
-								oninput="renderTicket()"
-							/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label>Método de Pago</label>
-						<select id="sale-payment-method" class="form-input">
-							<option value="Efectivo" selected>Efectivo</option>
-							<option value="Transferencia">Transferencia</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label
-							>Descripción
-							<small style="color: var(--text-muted)">(opcional)</small></label
-						>
-						<textarea
-							id="sale-description"
-							class="form-input sale-description-input"
-							placeholder="Ej: Juan García: 555-1234"
-							rows="1"
-						></textarea>
-					</div>
-					<div class="form-group">
-						<button type="button" class="btn-ghost" onclick="addToTicket()">
-							Añadir al Ticket
-						</button>
-					</div>
-				</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Cant.</label>
+              <input
+                type="number"
+                id="sale-quantity"
+                class="form-input"
+                min="1"
+                placeholder="Ej: 1"
+                oninput="renderTicket()"
+              />
+            </div>
+            <div class="form-group">
+              <label>Precio (u)</label>
+              <input
+                type="number"
+                id="sale-price"
+                class="form-input"
+                placeholder="0.00"
+                step="0.01"
+                oninput="renderTicket()"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Método de Pago</label>
+            <select id="sale-payment-method" class="form-input">
+              <option value="Efectivo" selected>Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label
+              >Descripción
+              <small style="color: var(--text-muted)">(opcional)</small></label
+            >
+            <textarea
+              id="sale-description"
+              class="form-input sale-description-input"
+              placeholder="Ej: Juan García: 555-1234"
+              rows="1"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn-ghost" onclick="addToTicket()">
+              Añadir al Ticket
+            </button>
+          </div>
+        </div>
 
-				<div id="ticket-section" class="ticket-section">
-					<div id="ticket-items-container" class="ticket-list"></div>
+        <div id="ticket-section" class="ticket-section">
+          <div id="ticket-items-container" class="ticket-list"></div>
 
-					<div class="ticket-footer">
-						<div class="ticket-total">
-							<span class="total-label">TOTAL A COBRAR:</span>
-							<strong id="ticket-total-amount" class="ticket-total-amount"
-								>$0.00</strong
-							>
-						</div>
-					</div>
-				</div>
+          <div class="ticket-footer">
+            <div class="ticket-total">
+              <span class="total-label">TOTAL A COBRAR:</span>
+              <strong id="ticket-total-amount" class="ticket-total-amount"
+                >$0.00</strong
+              >
+            </div>
+          </div>
+        </div>
 
-				<div class="modal-actions">
-					<button
-						type="button"
-						class="btn-confirm"
-						onclick="handleSaleSubmit()"
-					>
-						Confirmar Venta
-					</button>
-				</div>
-			</div>
-		</div>
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-confirm"
+            onclick="handleSaleSubmit()"
+          >
+            Confirmar Venta
+          </button>
+        </div>
+      </div>
+    </div>
 
-		<div id="modal-edit" class="modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 id="edit-modal-title">Editar</h2>
-					<button class="modal-header-btn" onclick="closeModal('modal-edit')">
-						<img src="./assets/icons/x-circle.svg" />
-					</button>
-				</div>
-				<form id="form-edit-product" onsubmit="handleEditSubmit(event)">
-					<input type="hidden" id="edit-product-id" />
-					<input type="hidden" id="edit-product-type" />
+    <div id="modal-edit" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="edit-modal-title">Editar</h2>
+          <button class="modal-header-btn" onclick="closeModal('modal-edit')">
+            <img src="./assets/icons/x-circle.svg" />
+          </button>
+        </div>
+        <form id="form-edit-product" onsubmit="handleEditSubmit(event)">
+          <input type="hidden" id="edit-product-id" />
+          <input type="hidden" id="edit-product-type" />
 
-					<div class="form-group">
-						<label id="edit-name-label">Nombre</label>
-						<input
-							type="text"
-							id="edit-product-name"
-							class="form-input"
-							disabled
-							required
-						/>
-					</div>
+          <div class="form-group">
+            <label id="edit-name-label">Nombre</label>
+            <input
+              type="text"
+              id="edit-product-name"
+              class="form-input"
+              disabled
+              required
+            />
+          </div>
 
-					<div id="edit-product-only-fields">
-						<div class="form-group">
-							<label>Precio Venta</label>
-							<input
-								type="number"
-								id="edit-product-price"
-								class="form-input"
-								step="0.01"
-								min="0"
-							/>
-							<label
-								>Compra Prom:
-								<strong id="edit-avg-cost" class="avg-cost">0</strong></label
-							>
-						</div>
-						<div class="form-row">
-							<div class="form-group">
-								<label>Cant. Actual</label>
-								<input
-									type="number"
-									id="edit-product-stock"
-									class="form-input"
-									min="0"
-									step="any"
-								/>
-							</div>
-							<div class="form-group">
-								<label>Inv. mínimo</label>
-								<input
-									type="number"
-									id="edit-product-threshold"
-									class="form-input"
-									min="0"
-									placeholder="Ej: 15"
-								/>
-							</div>
-						</div>
-					</div>
+          <div id="edit-product-only-fields">
+            <div class="form-group">
+              <label>Precio Venta</label>
+              <input
+                type="number"
+                id="edit-product-price"
+                class="form-input"
+                step="0.01"
+                min="0"
+              />
+              <label
+                >Compra Prom:
+                <strong id="edit-avg-cost" class="avg-cost">0</strong></label
+              >
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Cant. Actual</label>
+                <input
+                  type="number"
+                  id="edit-product-stock"
+                  class="form-input"
+                  min="0"
+                  step="any"
+                />
+              </div>
+              <div class="form-group">
+                <label>Inv. mínimo</label>
+                <input
+                  type="number"
+                  id="edit-product-threshold"
+                  class="form-input"
+                  min="0"
+                  placeholder="Ej: 15"
+                />
+              </div>
+            </div>
+          </div>
 
-					<div id="edit-service-only-fields" style="display: none">
-						<div class="form-group">
-							<label id="edit-service-price-label">Precio</label>
-							<input
-								type="number"
-								id="edit-service-price"
-								class="form-input"
-								step="0.01"
-								min="0"
-							/>
-						</div>
-						<div class="ticket-section">
-							<label>Materiales por sesión</label>
-							<div class="form-row">
-								<div class="form-group" style="flex: 2">
-									<select id="edit-recipe-product-select" class="form-input">
-										<option value="">Selecciona producto...</option>
-									</select>
-								</div>
+          <div id="edit-service-only-fields" style="display: none">
+            <div class="form-group">
+              <label id="edit-service-price-label">Precio</label>
+              <input
+                type="number"
+                id="edit-service-price"
+                class="form-input"
+                step="0.01"
+                min="0"
+              />
+            </div>
+            <div class="ticket-section">
+              <label>Materiales por sesión</label>
+              <div class="form-row">
+                <div class="form-group" style="flex: 2">
+                  <select id="edit-recipe-product-select" class="form-input">
+                    <option value="">Selecciona producto...</option>
+                  </select>
+                </div>
 
-								<div class="form-group">
-									<input
-										type="number"
-										id="edit-recipe-quantity"
-										class="form-input"
-										placeholder="Cant."
-										min="0.01"
-										step="0.01"
-									/>
-								</div>
-								<div class="form-group" style="flex: 0.5">
-									<button
-										type="button"
-										id="btn-add-edit-recipe-ingredient"
-										class="btn-ghost"
-									>
-										+
-									</button>
-								</div>
-							</div>
+                <div class="form-group">
+                  <input
+                    type="number"
+                    id="edit-recipe-quantity"
+                    class="form-input"
+                    placeholder="Cant."
+                    min="0.01"
+                    step="0.01"
+                  />
+                </div>
+                <div class="form-group" style="flex: 0.5">
+                  <button
+                    type="button"
+                    id="btn-add-edit-recipe-ingredient"
+                    class="btn-ghost"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
 
-							<div class="ticket-section">
-								<div id="edit-recipe-list" class="ticket-list"></div>
-							</div>
-						</div>
-					</div>
+              <div class="ticket-section">
+                <div id="edit-recipe-list" class="ticket-list"></div>
+              </div>
+            </div>
+          </div>
 
-					<div class="modal-actions">
-						<button type="submit" class="btn-confirm">Guardar</button>
-						<button
-							type="button"
-							class="btn-delete"
-							onclick="handleDeleteProduct()"
-						>
-							Eliminar
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
+          <div class="modal-actions">
+            <button type="submit" class="btn-confirm">Guardar</button>
+            <button
+              type="button"
+              class="btn-delete"
+              onclick="handleDeleteProduct()"
+            >
+              Eliminar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-		<div id="modal-premium" class="modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>Acceso Premium</h2>
-				</div>
+    <div id="modal-premium" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Acceso Premium</h2>
+        </div>
 
-				<ul class="premium-features">
-					<li>Inventario ilimitado</li>
-					<li>Ventas múltiples</li>
-					<li>Historial</li>
-					<li>Exportación de datos</li>
-					<li>Estadísticas</li>
-					<li>Modo dependientes</li>
-				</ul>
+        <ul class="premium-features">
+          <li>Inventario ilimitado</li>
+          <li>Ventas múltiples</li>
+          <li>Historial</li>
+          <li>Exportación de datos</li>
+          <li>Estadísticas</li>
+          <li>Modo dependientes</li>
+        </ul>
 
-				<div class="form-group">
-					<div
-						style="
-							display: flex;
-							justify-content: space-between;
-							align-items: center;
-							margin-bottom: 0.5rem;
-						"
-					>
-						<h2>Sincronizar stock</h2>
-						<label class="toggle-switch" style="margin-bottom: 0">
-							<input
-								type="checkbox"
-								id="modal-sync-stock-toggle"
-								onchange="handleSyncStockToggle(this.checked)"
-							/>
-							<span class="toggle-slider"></span>
-						</label>
-					</div>
+        <div class="form-group">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 0.5rem;
+            "
+          >
+            <h2>Sincronizar stock</h2>
+            <label class="toggle-switch" style="margin-bottom: 0">
+              <input
+                type="checkbox"
+                id="modal-sync-stock-toggle"
+                onchange="handleSyncStockToggle(this.checked)"
+              />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
 
-					<p>Actívalo si compartes el mismo inventario que tu manager</p>
-				</div>
+          <p>Actívalo si compartes el mismo inventario que tu manager</p>
+        </div>
 
-				<div class="form-group">
-					<label>Código del Manager</label>
-					<input
-						type="text"
-						id="premium-link-code-input"
-						class="form-input"
-						placeholder="Ej: KP-847293"
-						autocomplete="off"
-					/>
-				</div>
+        <div class="form-group">
+          <label>Código del Manager</label>
+          <input
+            type="text"
+            id="premium-link-code-input"
+            class="form-input"
+            placeholder="Ej: KP-847293"
+            autocomplete="off"
+          />
+        </div>
 
-				<div class="modal-actions">
-					<button
-						type="button"
-						class="btn-confirm"
-						onclick="submitPremiumLinkCode()"
-					>
-						Activar SELY
-					</button>
-				</div>
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-confirm"
+            onclick="submitPremiumLinkCode()"
+          >
+            Activar SELY
+          </button>
+        </div>
 
-				<p style="text-align: center; margin-top: 0.8rem">
-					¿No tienes código?
-					<a
-						href="https://wa.me/5351643954?text=Hola%2C%20quiero%20usar%20SELY."
-						target="_blank"
-						class="contact-link"
-					>
-						Contacta con el manager.
-					</a>
-				</p>
-			</div>
-		</div>
+        <p style="text-align: center; margin-top: 0.8rem">
+          ¿No tienes código?
+          <a
+            href="https://wa.me/5351643954?text=Hola%2C%20quiero%20usar%20SELY."
+            target="_blank"
+            class="contact-link"
+          >
+            Contacta con el manager.
+          </a>
+        </p>
+      </div>
+    </div>
 
-		<div id="toast-container"></div>
+    <div id="toast-container"></div>
 
-		<div id="modal-ui" class="modal-ui">
-			<div class="modal-ui-box">
-				<p class="modal-ui-message" id="modal-ui-message"></p>
-				<input
-					type="text"
-					id="modal-ui-input"
-					class="modal-ui-input"
-					style="display: none"
-					autocomplete="off"
-				/>
-				<div class="modal-ui-actions" id="modal-ui-actions"></div>
-			</div>
-		</div>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-		<script src="./js/main.js"></script>
-	</body>
+    <div id="modal-ui" class="modal-ui">
+      <div class="modal-ui-box">
+        <p class="modal-ui-message" id="modal-ui-message"></p>
+        <input
+          type="text"
+          id="modal-ui-input"
+          class="modal-ui-input"
+          style="display: none"
+          autocomplete="off"
+        />
+        <div class="modal-ui-actions" id="modal-ui-actions"></div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
 </html>
