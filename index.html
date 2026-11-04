@@ -177,42 +177,17 @@
           <p class="setting-help" id="sely-sync-stock-help"></p>
         </div>
         <div class="settings-card">
-          <h3>Datos Locales</h3>
-          <p>
-            Carga el inventario enviado por el dueño o exporta tus ventas para
-            enviárselas.
-          </p>
-          <button
-            class="primary-btn"
-            onclick="document.getElementById('input-import').click()"
-          >
-            <img src="./assets/icons/file-arrow-down.svg" />
-            Cargar Datos
-          </button>
-          <input
-            type="file"
-            id="input-import"
-            hidden
-            accept=".json"
-            onchange="handleImport(this.files[0])"
-          />
-          <button class="primary-btn" onclick="exportSalesToOwner()">
-            <img src="./assets/icons/file-arrow-up.svg" />
-            Exportar Ventas
-          </button>
-        </div>
-        <div class="settings-card">
           <h3 class="card-header-actions">Zona de Peligro</h3>
           <p>
-            Borra permanentemente el inventario local y el historial de ventas
-            de este dispositivo.
+            Borra el inventario y las ventas de este dispositivo y lo desvincula
+            del manager. Los datos del manager no se borran.
           </p>
           <button
             class="btn-delete"
             style="margin-top: 1rem"
             onclick="clearDatabase()"
           >
-            Borrar todos los datos
+            Borrar datos locales
           </button>
         </div>
         <div class="settings-card">
@@ -225,7 +200,7 @@
             </a>
           </div>
 
-          <span class="version-badge">v4.1.2</span>
+          <span class="version-badge">v4.1.4</span>
 
           <div class="icon-links">
             <a href="https://t.me/stxapp" target="_blank">
